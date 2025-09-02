@@ -202,8 +202,14 @@ function buyNow(title,price,mrp,image) {
     localStorage.setItem("price", price);
     localStorage.setItem("mrp", mrp);
     localStorage.setItem("image", image);
+    localStorage.setItem("selected_product", JSON.stringify({
+        title: title,
+        price: price,
+        mrp: mrp,
+        image: image
+    }));
 
-    window.location.href = MAIN_URL.replace("index.html", "address.html");;
+    window.location.href = MAIN_URL.replace("index.html", "pages/address.html");
 }
 window.onload = function(){
     document.getElementById('autoClickBtn').click();

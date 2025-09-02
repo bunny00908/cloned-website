@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment - Electronics Store</title>
     <link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="stylesheet" href="../assets/css/bootstrap.core.min.css">
     <link rel="stylesheet" href="../assets/css/userCustomizations.css">
     <style>
@@ -270,6 +271,17 @@
                 document.getElementById('customerAddress').textContent = 
                     `${address.houseNo}, ${address.roadName}, ${address.city}, ${address.state} - ${address.pincode}`;
             }
+            
+            // Update price details from localStorage
+            const price = localStorage.getItem('price') || '399.00';
+            const mrp = localStorage.getItem('mrp') || '10999.00';
+            
+            document.getElementById('itemPrice').textContent = `₹${price}`;
+            document.getElementById('totalPayable').textContent = `₹${price}`;
+            
+            // Update bottom price display
+            document.querySelector('.text-muted').textContent = `₹${mrp}`;
+            document.querySelector('strong').textContent = `₹${price}`;
         });
     </script>
 </body>
