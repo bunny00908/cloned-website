@@ -1,288 +1,582 @@
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment - Electronics Store</title>
-    <link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <link rel="stylesheet" href="../assets/css/bootstrap.core.min.css">
-    <link rel="stylesheet" href="../assets/css/userCustomizations.css">
-    <style>
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-            background: white;
-            margin-bottom: 20px;
-        }
-        .step {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 20px;
-            font-weight: bold;
-            position: relative;
-        }
-        .step.active {
-            background: #2874f0;
-            color: white;
-        }
-        .step.completed {
-            background: #28a745;
-            color: white;
-        }
-        .step.pending {
-            background: #e9ecef;
-            color: #6c757d;
-        }
-        .step::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            width: 40px;
-            height: 2px;
-            background: #e9ecef;
-            transform: translateY(-50%);
-        }
-        .step:last-child::after {
-            display: none;
-        }
-        .step.completed::after {
-            background: #28a745;
-        }
-        .payment-method {
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .payment-method:hover {
-            border-color: #2874f0;
-        }
-        .payment-method.selected {
-            border-color: #2874f0;
-            background-color: #f8f9ff;
-        }
-        .payment-logos {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .payment-logo {
-            height: 40px;
-            object-fit: contain;
-        }
-        .countdown-timer {
-            background: linear-gradient(45deg, #ff6b35, #f7931e);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Electronics Store</title>
+<link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/custom.css">
+<style>
+body {
+font-family: 'Roboto', sans-serif;
+background-color: #f8f9fa;
+}
+
+.header-container {
+background: linear-gradient(135deg, #2874f0, #1e5bb8);
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.step-indicator {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px 0;
+background: white;
+margin-bottom: 20px;
+}
+
+.step {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 20px;
+font-weight: bold;
+position: relative;
+}
+
+.step.active {
+background: #2874f0;
+color: white;
+}
+
+.step.completed {
+background: #28a745;
+color: white;
+}
+
+.step.pending {
+background: #e9ecef;
+color: #6c757d;
+}
+
+.step::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 100%;
+width: 40px;
+height: 2px;
+background: #e9ecef;
+transform: translateY(-50%);
+}
+
+.step:last-child::after {
+display: none;
+}
+
+.step.completed::after {
+background: #28a745;
+}
+
+.payment-card {
+background: white;
+border-radius: 8px;
+padding: 20px;
+margin-bottom: 20px;
+}
+
+.payment-card h6 {
+color: #333;
+font-weight: 600;
+margin-bottom: 15px;
+border-bottom: 1px solid #eee;
+padding-bottom: 10px;
+}
+
+.payment-method {
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 15px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+border-color: #2874f0;
+background-color: #f8f9ff;
+}
+
+.payment-method.selected {
+border-color: #2874f0;
+background-color: #f8f9ff;
+}
+
+.payment-method input[type="radio"] {
+margin-right: 10px;
+}
+
+.payment-icon {
+width: 30px;
+height: 30px;
+margin-right: 10px;
+}
+
+.order-total {
+background: #f8f9fa;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 20px;
+}
+
+.total-row {
+display: flex;
+justify-content: space-between;
+margin-bottom: 8px;
+}
+
+.total-row.final {
+font-weight: 600;
+font-size: 18px;
+color: #333;
+border-top: 1px solid #ddd;
+padding-top: 10px;
+margin-top: 10px;
+}
+
+.btn-pay {
+background: #ff6b35;
+border: none;
+border-radius: 8px;
+padding: 15px;
+font-weight: 600;
+color: white;
+width: 100%;
+transition: all 0.3s ease;
+}
+
+.btn-pay:hover {
+background: #e55a2b;
+}
+
+.btn-pay:disabled {
+background: #ccc;
+cursor: not-allowed;
+}
+
+.security-info {
+background: #e7f3ff;
+border: 1px solid #b3d9ff;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 20px;
+font-size: 14px;
+color: #0066cc;
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="container-fluid py-2 header-container" style="background-color:#2874f0">
-        <div class="row header align-items-center">
-            <div class="col-2">
-                <div class="menu-icon" onclick="goBack()">
-                    <svg width="19" height="16" viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.556 7.847H1M7.45 1L1 7.877l6.45 6.817" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
-                    </svg> 
-                </div>
-            </div>
-            <div class="col-8 text-center">
-                <h5 class="text-white mb-0">Payments</h5>
-            </div>
-        </div>
-    </div>
 
-    <!-- Progress Steps -->
-    <div class="step-indicator">
-        <div class="step completed">✓</div>
-        <div class="step completed">✓</div>
-        <div class="step active">3</div>
-    </div>
-    <div class="text-center mb-4">
-        <small class="text-muted">Address → Order Summary → Payment</small>
-    </div>
+<!-- Header -->
+<div class="container-fluid py-2 header-container">
+<div class="row align-items-center">
+<div class="col-2">
+<div class="menu-icon" onclick="goBack()">
+<svg width="19" height="16" viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.556 7.847H1M7.45 1L1 7.877l6.45 6.817" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+</svg>
+</div>
+</div>
+<div class="col-8 text-center">
+<h5 class="text-white mb-0">Payment</h5>
+</div>
+<div class="col-2"></div>
+</div>
+</div>
 
-    <div class="container">
-        <!-- Countdown Timer -->
-        <div class="countdown-timer">
-            <span>Offer ends in </span>
-            <span id="countdown">06min 20sec</span>
-        </div>
+<!-- Progress Steps -->
+<div class="step-indicator">
+<div class="step completed">1</div>
+<div class="step completed">2</div>
+<div class="step active">3</div>
+</div>
 
-        <!-- Payment Methods -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h6 class="mb-3">Select Payment Method</h6>
-                
-                <div class="payment-method" onclick="selectPayment('upi')">
-                    <div class="d-flex align-items-center">
-                        <input type="radio" name="payment" value="upi" class="me-3">
-                        <div>
-                            <strong>UPI / Cards / Netbanking</strong>
-                            <p class="small text-muted mb-0">Pay using UPI, Credit/Debit Cards or Net Banking</p>
-                        </div>
-                    </div>
-                </div>
+<div class="text-center mb-4">
+<small class="text-muted">Address → Order Summary → Payment</small>
+</div>
 
-                <div class="payment-method" onclick="selectPayment('cod')">
-                    <div class="d-flex align-items-center">
-                        <input type="radio" name="payment" value="cod" class="me-3">
-                        <div>
-                            <strong>Cash on Delivery</strong>
-                            <p class="small text-muted mb-0">Pay when you receive the product</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+<!-- Order Total -->
+<div class="order-total"><!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - Electronics Store</title>
+<link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/custom.css">
+<style>
+body {
+font-family: 'Roboto', sans-serif;
+background-color: #f8f9fa;
+}
 
-        <!-- Price Details -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h6 class="mb-3">Price Details</h6>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Price (1 item)</span>
-                    <span id="itemPrice">₹867.00</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Delivery Charges</span>
-                    <span class="text-success">FREE</span>
-                </div>
-                <hr>
-                <div class="d-flex justify-content-between">
-                    <strong>Amount Payable</strong>
-                    <strong id="totalPayable">₹867.00</strong>
-                </div>
-            </div>
-        </div>
+.header-container {
+background: linear-gradient(135deg, #2874f0, #1e5bb8);
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 
-        <!-- Security Info -->
-        <div class="card mb-5">
-            <div class="card-body text-center">
-                <div class="row mb-3">
-                    <div class="col-4">
-                        <div class="mb-2">🛡️</div>
-                        <small>Authentic</small>
-                    </div>
-                    <div class="col-4">
-                        <div class="mb-2">🔒</div>
-                        <small>Secure Payments</small>
-                    </div>
-                    <div class="col-4">
-                        <div class="mb-2">↩️</div>
-                        <small>Easy Returns</small>
-                    </div>
-                </div>
-                
-                <!-- Payment Logos -->
-                <div class="payment-logos">
-                    <div style="background: #1a1f71; color: white; padding: 8px 12px; border-radius: 4px; font-weight: bold;">VISA</div>
-                    <div style="background: linear-gradient(45deg, #eb001b, #ff5f00); color: white; padding: 8px 12px; border-radius: 4px; font-weight: bold;">MC</div>
-                    <div style="background: #00baf2; color: white; padding: 8px 12px; border-radius: 4px; font-weight: bold;">RuPay</div>
-                    <div style="background: #0066cc; color: white; padding: 8px 12px; border-radius: 4px; font-weight: bold;">UPI</div>
-                </div>
-            </div>
-        </div>
-    </div>
+.step-indicator {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px 0;
+background: white;
+margin-bottom: 20px;
+}
 
-    <!-- Fixed Bottom Section -->
-    <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1);">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted">₹47,999.00</span>
-                <button class="btn" style="background: #ffc107; color: black; font-weight: bold; padding: 12px 30px; border-radius: 8px;" onclick="processPayment()">
-                    Order Now
-                </button>
-            </div>
-            <div class="text-center">
-                <strong>₹867.00</strong>
-            </div>
-        </div>
-    </div>
+.step {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 20px;
+font-weight: bold;
+position: relative;
+}
 
-    <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
+.step.active {
+background: #2874f0;
+color: white;
+}
 
-        function selectPayment(method) {
-            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-            document.querySelector(`input[value="${method}"]`).checked = true;
-        }
+.step.completed {
+background: #28a745;
+color: white;
+}
 
-        function processPayment() {
-            const selectedPayment = document.querySelector('input[name="payment"]:checked');
-            if (!selectedPayment) {
-                alert('Please select a payment method');
-                return;
-            }
+.step.pending {
+background: #e9ecef;
+color: #6c757d;
+}
 
-            // Simulate payment processing
-            alert('Payment processing... This is a demo website. No actual payment will be processed.');
+.step::after {
+content: '';
+position: absolute;
+top: 50%;
+left: 100%;
+width: 40px;
+height: 2px;
+background: #e9ecef;
+transform: translateY(-50%);
+}
+
+.step:last-child::after {
+display: none;
+}
+
+.step.completed::after {
+background: #28a745;
+}
+
+.payment-card {
+background: white;
+border-radius: 8px;
+padding: 20px;
+margin-bottom: 20px;
+}
+
+.payment-card h6 {
+color: #333;
+font-weight: 600;
+margin-bottom: 15px;
+border-bottom: 1px solid #eee;
+padding-bottom: 10px;
+}
+
+.payment-method {
+border: 2px solid #e9ecef;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 15px;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+border-color: #2874f0;
+}
+
+.payment-method.selected {
+border-color: #2874f0;
+background-color: #f8f9ff;
+}
+
+.payment-method input[type="radio"] {
+margin-right: 10px;
+}
+
+.payment-icon {
+width: 30px;
+height: 30px;
+margin-right: 10px;
+}
+
+.order-total {
+background: #f8f9fa;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 20px;
+}
+
+.total-row {
+display: flex;
+justify-content: space-between;
+margin-bottom: 5px;
+}
+
+.total-row.final {
+font-weight: 600;
+font-size: 18px;
+border-top: 1px solid #dee2e6;
+padding-top: 10px;
+margin-top: 10px;
+}
+
+.btn-pay {
+background: #ff6b35;
+border: none;
+border-radius: 8px;
+padding: 15px;
+font-weight: 600;
+color: white;
+width: 100%;
+transition: all 0.3s ease;
+}
+
+.btn-pay:hover {
+background: #e55a2b;
+}
+
+.security-note {
+background: #d4edda;
+border: 1px solid #c3e6cb;
+border-radius: 8px;
+padding: 10px;
+font-size: 12px;
+color: #155724;
+text-align: center;
+margin-top: 15px;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="container-fluid py-2 header-container">
+<div class="row align-items-center">
+<div class="col-2">
+<div class="menu-icon" onclick="goBack()">
+<svg width="19" height="16" viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.556 7.847H1M7.45 1L1 7.877l6.45 6.817" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+</svg>
+</div>
+</div>
+<div class="col-8 text-center">
+<h5 class="text-white mb-0">Payment</h5>
+</div>
+<div class="col-2"></div>
+</div>
+</div>
+
+<!-- Progress Steps -->
+<div class="step-indicator">
+<div class="step completed">1</div>
+<div class="step completed">2</div>
+<div class="step active">3</div>
+</div>
+
+<div class="text-center mb-4">
+<small class="text-muted">Address → Order Summary → Payment</small>
+</div>
+
+<div class="container">
+<!-- Order Total -->
+<div class="order-total">
+<div class="total-row">
+<span>Subtotal:</span>
+<span>₹<span id="subtotal">0.00</span></span>
+</div>
+<div class="total-row">
+<span>Delivery:</span>
+<span class="text-success">FREE</span>
+</div>
+<div class="total-row">
+<span>Taxes:</span>
+<span>₹<span id="taxes">0.00</span></span>
+</div>
+<div class="total-row final">
+<span>Total Amount:</span>
+<span>₹<span id="totalAmount">0.00</span></span>
+</div>
+</div>
+
+<!-- Payment Methods -->
+<div class="payment-card">
+<h6>Select Payment Method</h6>
+<form id="paymentForm">
+<div class="payment-method" onclick="selectPaymentMethod('razorpay')">
+<input type="radio" name="paymentMethod" value="razorpay" id="razorpay">
+<svg class="payment-icon" viewBox="0 0 24 24" fill="#2874f0">
+<path d="M12 2L2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7l-10-5z"/>
+</svg>
+<label for="razorpay" class="mb-0">
+<strong>Razorpay</strong><br>
+<small class="text-muted">Credit/Debit Card, UPI, Net Banking</small>
+</label>
+</div>
+
+<div class="payment-method" onclick="selectPaymentMethod('cod')">
+<input type="radio" name="paymentMethod" value="cod" id="cod">
+<svg class="payment-icon" viewBox="0 0 24 24" fill="#28a745">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+</svg>
+<label for="cod" class="mb-0">
+<strong>Cash on Delivery</strong><br>
+<small class="text-muted">Pay when you receive</small>
+</label>
+</div>
+</form>
+</div>
+
+<!-- Place Order Button -->
+<button class="btn btn-pay" onclick="processPayment()">
+<span id="payButtonText">Place Order</span>
+</button>
+
+<div class="security-note">
+🔒 Your payment information is secure and encrypted
+</div>
+</div>
+
+<!-- Razorpay Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/cart.js"></script>
+<script src="../assets/js/checkout.js"></script>
+<script>
+function goBack() {
+window.location.href = 'order-summary.html';
+}
+
+function selectPaymentMethod(method) {
+// Remove previous selections
+document.querySelectorAll('.payment-method').forEach(el => {
+el.classList.remove('selected');
+});
+
+// Select current method
+document.querySelector(`input[value="${method}"]`).checked = true;
+document.querySelector(`input[value="${method}"]`).closest('.payment-method').classList.add('selected');
+
+// Update button text
+const payButton = document.getElementById('payButtonText');
+if (method === 'razorpay') {
+payButton.textContent = 'Pay Now';
+} else {
+payButton.textContent = 'Place Order';
+}
+}
+
+function loadOrderSummary() {
+const orderSummary = getOrderSummary();
+if (orderSummary) {
+document.getElementById('subtotal').textContent = orderSummary.subtotal.toFixed(2);
+document.getElementById('taxes').textContent = orderSummary.taxes.toFixed(2);
+document.getElementById('totalAmount').textContent = orderSummary.total.toFixed(2);
+}
+}
+
+function processPayment() {
+const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+    
+if (!selectedPayment) {
+alert('Please select a payment method');
+return;
+}
+
+const orderSummary = getOrderSummary();
+if (!orderSummary) {
+alert('Order information not found');
+return;
+}
+
+if (selectedPayment.value === 'razorpay') {
+initiateRazorpayPayment(orderSummary);
+} else {
+// Cash on Delivery
+processCODOrder(orderSummary);
+}
+}
+
+function initiateRazorpayPayment(orderSummary) {
+const options = {
+key: "rzp_test_1234567890", // Replace with your actual Razorpay key
+amount: Math.round(orderSummary.total * 100), // Amount in paise
+currency: "INR",
+name: "Electronics Store",
+description: "Purchase from Electronics Store",
+image: "../assets/infinityMedia/favicon.png",
+handler: function (response) {
+// Payment successful
+const paymentData = {
+razorpay_payment_id: response.razorpay_payment_id,
+order_id: generateOrderId(),
+amount: orderSummary.total,
+payment_method: 'razorpay',
+status: 'paid'
+};
             
-            // Redirect to success page
-            setTimeout(() => {
-                window.location.href = 'order-success.html';
-            }, 2000);
-        }
+savePaymentInfo(paymentData);
+clearCart();
+clearCheckoutData();
+window.location.href = 'order-success.html';
+},
+prefill: {
+name: orderSummary.address.fullName,
+contact: orderSummary.address.mobile
+},
+theme: {
+color: "#2874f0"
+}
+};
 
-        // Countdown timer
-        function updateCountdown() {
-            const now = new Date();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const totalSeconds = minutes * 60 + seconds;
-            const cycleSeconds = 20 * 60; // 20 minutes
-            const remaining = cycleSeconds - (totalSeconds % cycleSeconds);
-            
-            const mins = Math.floor(remaining / 60);
-            const secs = remaining % 60;
-            
-            document.getElementById('countdown').textContent = `${String(mins).padStart(2, '0')}min ${String(secs).padStart(2, '0')}sec`;
-        }
+const rzp = new Razorpay(options);
+rzp.open();
+}
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+function processCODOrder(orderSummary) {
+const paymentData = {
+order_id: generateOrderId(),
+amount: orderSummary.total,
+payment_method: 'cod',
+status: 'pending'
+};
+    
+savePaymentInfo(paymentData);
+clearCart();
+clearCheckoutData();
+window.location.href = 'order-success.html';
+}
 
-        // Load saved data
-        document.addEventListener('DOMContentLoaded', function() {
-            const address = JSON.parse(localStorage.getItem('delivery_address') || '{}');
-            if (address.fullName) {
-                document.getElementById('customerName').textContent = address.fullName;
-                document.getElementById('customerAddress').textContent = 
-                    `${address.houseNo}, ${address.roadName}, ${address.city}, ${address.state} - ${address.pincode}`;
-            }
-            
-            // Update price details from localStorage
-            const price = localStorage.getItem('price') || '399.00';
-            const mrp = localStorage.getItem('mrp') || '10999.00';
-            
-            document.getElementById('itemPrice').textContent = `₹${price}`;
-            document.getElementById('totalPayable').textContent = `₹${price}`;
-            
-            // Update bottom price display
-            document.querySelector('.text-muted').textContent = `₹${mrp}`;
-            document.querySelector('strong').textContent = `₹${price}`;
-        });
-    </script>
+function generateOrderId() {
+return 'ORD' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase();
+}
+
+// Load order summary on page load
+document.addEventListener('DOMContentLoaded', function() {
+loadOrderSummary();
+// Default select first payment method
+selectPaymentMethod('razorpay');
+});
+</script>
 </body>
 </html>
