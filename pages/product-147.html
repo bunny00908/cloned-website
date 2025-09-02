@@ -201,13 +201,11 @@
         }
 
         function buyNow() {
-            localStorage.setItem('selected_product', JSON.stringify({
-                title: 'Samsung Soundbar (HW-C45E/XL) 2.1 Channel, 300W, Dolby Digital, 3 Speakers, Wireless Subwoofer, Bluetooth Enabled and DTS Virtual X Experience Sound (Black)',
-                price: '399.00',
-                mrp: '10999.00',
-                image: '../images/amazon/41QhWiCJsCL._SL1500_.jpg'
-            }));
-            window.location.href = '../pages/address.html';
+            localStorage.setItem('title', 'Samsung Soundbar (HW-C45E/XL) 2.1 Channel, 300W, Dolby Digital, 3 Speakers, Wireless Subwoofer, Bluetooth Enabled and DTS Virtual X Experience Sound (Black)');
+            localStorage.setItem('price', '399.00');
+            localStorage.setItem('mrp', '10999.00');
+            localStorage.setItem('image', '../images/amazon/41QhWiCJsCL._SL1500_.jpg');
+            window.location.href = 'address.html';
         }
 
         // Countdown timer
