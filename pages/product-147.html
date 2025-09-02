@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samsung Soundbar - Electronics Store</title>
+    <link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
+    <link rel="stylesheet" href="../assets/css/bootstrap.core.min.css">
+    <link rel="stylesheet" href="../assets/css/userCustomizations.css">
+    <style>
+        .product-slider img {
+            height: 400px;
+            width: auto;
+            object-fit: contain;
+        }
+        .love-icon, .share-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            right: 15px;
+            border: 1px solid #eee;
+            z-index: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .love-icon {
+            top: 15px;
+        }
+        .share-icon {
+            top: 65px;
+        }
+        .countdown-timer {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Header -->
+        <div class="container-fluid py-2 header-container" style="background-color:#2874f0">
+            <div class="row header align-items-center">
+                <div class="col-2">
+                    <div class="menu-icon" onclick="goBack()">
+                        <svg width="19" height="16" viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.556 7.847H1M7.45 1L1 7.877l6.45 6.817" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                        </svg> 
+                    </div>
+                </div>
+                <div class="col-8 text-center">
+                    <img alt="logo" src="../assets/infinityMedia/Q18Ifxk.png" height="30px">
+                </div>
+                <div class="col-2 text-end">
+                    <svg width="16" height="16" viewBox="0 0 15 15" fill="#fff">
+                        <path d="m5.189 13.04c0 .996-.791 1.804-1.767 1.804-.976 0-1.767-.808-1.767-1.804 0-.996.791-1.804 1.767-1.804.976 0 1.767.808 1.767 1.804"/>
+                        <path d="m14.912 2.259h-14.298l2.247 6.917c.042.129.16.216.293.216h8.06c-.064.69-.629 1.841-1.702 1.841h-6.04l1.072 1.991h5.611c1.881 0 2.938-2.278 3.657-4.719.888-3.01 1.219-6.245 1.106-6.245"/>
+                    </svg> 
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="container-fluid p-0">
+            <!-- Product Images -->
+            <div class="card mb-3">
+                <div class="product-slider position-relative">
+                    <div class="love-icon" onclick="toggleWishlist()">❤️</div>
+                    <div class="share-icon" onclick="shareProduct()">📤</div>
+                    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2"></button>
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100 product-slider" src="../images/amazon/41QhWiCJsCL._SL1500_.jpg" alt="Samsung Soundbar">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100 product-slider" src="../images/amazon/713oHF1e2aL._SL1500_.jpg" alt="Samsung Soundbar">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100 product-slider" src="../images/amazon/51Y0p--NTiL._SL1500_.jpg" alt="Samsung Soundbar">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100 product-slider" src="../images/amazon/71dt1H3PW9L._SL1500_.jpg" alt="Samsung Soundbar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h1 class="product-title">Samsung Soundbar (HW-C45E/XL) 2.1 Channel, 300W, Dolby Digital, 3 Speakers, Wireless Subwoofer, Bluetooth Enabled and DTS Virtual X Experience Sound (Black)</h1>
+                    <img src="../assets/infinityMedia/plue-fassured.png" alt="Assured" style="width: 100px" class="my-2">
+                    <div class="product-price d-flex align-items-center my-3">
+                        <span class="discount me-2">96% off</span>
+                        <span class="mrp me-2">₹ 10,999.00</span>
+                        <span class="price">₹ 399.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="card mb-3">
+                <div class="countdown-timer">
+                    <span>Offer ends in </span>
+                    <span id="countdown">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <img src="../assets/infinityMedia/pay-latter.png" alt="Payment Options" class="w-100">
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <img src="../assets/infinityMedia/replacement.png" class="mb-2" style="width: 30px;">
+                            <p class="small">7 days Replacement</p>
+                        </div>
+                        <div class="col-4">
+                            <img src="../assets/infinityMedia/non-cod.png" class="mb-2" style="width: 30px;">
+                            <p class="small">No Cash On Delivery</p>
+                        </div>
+                        <div class="col-4">
+                            <img src="../assets/infinityMedia/plue-fassured.png" class="mb-2" style="width: 60px;">
+                            <p class="small">Plus (F-Assured)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h5>About this item</h5>
+                    <ul>
+                        <li>Power Output: 300W, Dolby 2.1 channel Surround Sound, 3 Wireless Speakers</li>
+                        <li>Deep, rich bass with a wireless subwoofer, Dolby 2.1ch</li>
+                        <li>Sound Modes: Bass Boost, Surround Sound Expansion, Game, Adaptive Lite, DTS Virtual:X, Standard</li>
+                        <li>Wireless music streaming via Bluetooth, One Remote Control, Connectivity: Optical, Bluetooth and USB</li>
+                        <li>Samsung Installation Team will contact you for Demo/Installation within 24-48 hours of delivery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fixed Bottom Buttons -->
+        <div class="button-container">
+            <button class="buynow-button buynow-button-white" onclick="addToCart()">Add to Cart</button>
+            <button class="buynow-button" onclick="buyNow()">Buy Now</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function toggleWishlist() {
+            alert('Added to wishlist!');
+        }
+
+        function shareProduct() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Samsung Soundbar',
+                    text: 'Check out this amazing deal!',
+                    url: window.location.href
+                });
+            } else {
+                alert('Share feature not supported on this device');
+            }
+        }
+
+        function addToCart() {
+            localStorage.setItem('cart_item', JSON.stringify({
+                title: 'Samsung Soundbar (HW-C45E/XL) 2.1 Channel, 300W, Dolby Digital, 3 Speakers, Wireless Subwoofer, Bluetooth Enabled and DTS Virtual X Experience Sound (Black)',
+                price: '399.00',
+                mrp: '10999.00',
+                image: '../images/amazon/41QhWiCJsCL._SL1500_.jpg'
+            }));
+            alert('Added to cart!');
+        }
+
+        function buyNow() {
+            localStorage.setItem('selected_product', JSON.stringify({
+                title: 'Samsung Soundbar (HW-C45E/XL) 2.1 Channel, 300W, Dolby Digital, 3 Speakers, Wireless Subwoofer, Bluetooth Enabled and DTS Virtual X Experience Sound (Black)',
+                price: '399.00',
+                mrp: '10999.00',
+                image: '../images/amazon/41QhWiCJsCL._SL1500_.jpg'
+            }));
+            window.location.href = '../pages/address.html';
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const totalSeconds = minutes * 60 + seconds;
+            const cycleSeconds = 20 * 60; // 20 minutes
+            const remaining = cycleSeconds - (totalSeconds % cycleSeconds);
+            
+            const mins = Math.floor(remaining / 60);
+            const secs = remaining % 60;
+            
+            document.getElementById('countdown').textContent = `${mins}min ${secs}sec`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>

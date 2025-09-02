@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Delivery Address - Electronics Store</title>
+    <link rel="icon" type="image/x-icon" href="../assets/infinityMedia/favicon.png">
+    <link rel="stylesheet" href="../assets/css/bootstrap.core.min.css">
+    <link rel="stylesheet" href="../assets/css/userCustomizations.css">
+    <style>
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            background: white;
+            margin-bottom: 20px;
+        }
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+            font-weight: bold;
+            position: relative;
+        }
+        .step.active {
+            background: #2874f0;
+            color: white;
+        }
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+        .step.pending {
+            background: #e9ecef;
+            color: #6c757d;
+        }
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 40px;
+            height: 2px;
+            background: #e9ecef;
+            transform: translateY(-50%);
+        }
+        .step:last-child::after {
+            display: none;
+        }
+        .step.completed::after {
+            background: #28a745;
+        }
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+        .btn-save {
+            background: #ff6b35;
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+        }
+        .btn-save:hover {
+            background: #e55a2b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="container-fluid py-2 header-container" style="background-color:#2874f0">
+        <div class="row header align-items-center">
+            <div class="col-2">
+                <div class="menu-icon" onclick="goBack()">
+                    <svg width="19" height="16" viewBox="0 0 19 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.556 7.847H1M7.45 1L1 7.877l6.45 6.817" stroke="#FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                    </svg> 
+                </div>
+            </div>
+            <div class="col-8 text-center">
+                <h5 class="text-white mb-0">Add Delivery Address</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step pending">2</div>
+        <div class="step pending">3</div>
+    </div>
+    <div class="text-center mb-4">
+        <small class="text-muted">Address → Order Summary → Payment</small>
+    </div>
+
+    <!-- Address Form -->
+    <div class="container">
+        <form id="addressForm">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="fullName" placeholder="Full Name" required>
+                <label for="fullName">Full Name</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="tel" class="form-control" id="mobile" placeholder="Mobile number" required>
+                <label for="mobile">Mobile number</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="pincode" placeholder="Pincode" required>
+                <label for="pincode">Pincode</label>
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="city" placeholder="City" required>
+                        <label for="city">City</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating">
+                        <select class="form-select" id="state" required>
+                            <option value="">Select State</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="West Bengal">West Bengal</option>
+                        </select>
+                        <label for="state">State</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="houseNo" placeholder="House No., Building Name" required>
+                <label for="houseNo">House No., Building Name</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="roadName" placeholder="Road name, Area, Colony" required>
+                <label for="roadName">Road name, Area, Colony</label>
+            </div>
+
+            <button type="submit" class="btn btn-save mt-4">Save Address</button>
+        </form>
+    </div>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.getElementById('addressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Save address data
+            const addressData = {
+                fullName: document.getElementById('fullName').value,
+                mobile: document.getElementById('mobile').value,
+                pincode: document.getElementById('pincode').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                houseNo: document.getElementById('houseNo').value,
+                roadName: document.getElementById('roadName').value
+            };
+            
+            localStorage.setItem('delivery_address', JSON.stringify(addressData));
+            
+            // Redirect to order summary
+            window.location.href = 'order-summary.html';
+        });
+    </script>
+</body>
+</html>
